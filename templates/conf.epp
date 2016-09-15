@@ -1,0 +1,12 @@
+<%- |
+      String  $host,
+| -%>
+GPG_KEY='<%= $host %>'
+GPG_PW='<%= $host %>'
+
+keyid=$(gpg --list-keys --with-colon '<%= $host %>' | grep -E '^pub' | cut -d':' -f5)
+GPG_KEY_SIGN=${keyid: -8}
+GPG_PW_SIGN='<%= $host %>'
+
+TARGET='file:///media/backups'
+SOURCE='/root'
