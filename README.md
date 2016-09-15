@@ -1,5 +1,5 @@
 #Backup
-This configures backups using duplicity and SecretServer(https://github.com/thexa4/secret-server).
+This configures backups using duplicity and [SecretServer](https://github.com/thexa4/secrets-server).
 
 ##Usage
 Available parameters:
