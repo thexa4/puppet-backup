@@ -1,5 +1,6 @@
 <%- |
       String  $host,
+      String  $backup_destination,
 | -%>
 GPG_KEY='<%= $host %>'
 GPG_PW='<%= $host %>'
