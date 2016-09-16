@@ -1,7 +1,11 @@
 <%- |
       String  $host,
       String  $backup_destination,
+      String  $target_user = "",
+      String  $target_pass = "",
 | -%>
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 GPG_KEY='<%= $host %>'
 GPG_PW='<%= $host %>'
 
@@ -9,5 +13,23 @@ keyid=$(gpg --list-keys --with-colon '<%= $host %>' | grep -E '^pub' | cut -d':'
 GPG_KEY_SIGN=${keyid: -8}
 GPG_PW_SIGN='<%= $host %>'
 
-TARGET='file:///media/backups'
-SOURCE='/root'
+TARGET='<%= $backup_destination %><%= $host %>'
+SOURCE='/'
+
+TARGET_USER='<%= $target_user %>'
+TARGET_PASS='<%= $target_pass %>'
+
+MAX_AGE=12M
+MAX_FULLBKP_AGE=2W
+DUPL_PARAMS="$DUPL_PARAMS --full-if-older-than $MAX_FULLBKP_AGE "
+MAX_FULLS_WITH_INCRS=8
+
+MAX_FULL_BACKUPS=1000 
+
+VERBOSITY=2
+
+for file in $DIR/conf.d/*; do
+	if [ -f "$file" ] ; then
+		source "$file"
+	fi
+done
